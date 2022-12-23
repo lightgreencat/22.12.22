@@ -190,8 +190,7 @@ TBS_list <- df_word
 
 mode(pos_dateerase)
 mode(TBS_list)
-mode(TBS_character)
-
+ 
 filter_df_word <- 
   write.csv(df_word, file = "D:/$$$$연택 개인용$$$$/df_word.csv")
 
@@ -313,10 +312,23 @@ time_cycle$date <- as.POSIXct(time_cycle$date)
 view(time_cycle)
 
 ####시계열분석 분석 좀따
+year1 <- year(time_cycle$date)
+year1 <- as.character(year1)
+time_cycle <- cbind(time_cycle, year = year1)
+# TBS_2022 <- subset(time_cycle, date >= "2022-01-01" & date <= "2023-01-01")
+# TBS_2021 <- subset(time_cycle, date >= "2021-01-01" & date < "2022-01-01")
+# TBS_2020 <- subset(time_cycle, date >= "2020-01-01" & date < "2021-01-01")
+
+Time_pos_done <- pos_done
+Time_pos_done$date <- as.Date(Time_pos_done$date)
+
+Time_cycle_done <- time_cycle
+Time_cycle_done <- as.Date(Time_cycle_done$date)
 
 dev.new(width=500,height=500, unit="px")
 
 dev.off()
+############################갑자기 왠 에러????############################
 windows(width=10, height=10, rescale="fit", title="fixed")
 Time_frequency <- Time_cycle_done %>%  #Time_cycle-> Time_cycle_done
   ggplot(aes(Time_cycle_done$date)) +   #time_cycle ->  Time_cycle_done
@@ -346,8 +358,9 @@ Time_frequency2 <-
 ggsave("title_edit.jpg", plot = Time_frequency2, dpi =300)
 
 ################연도별로 붙여서 비교해보자##############
-
-
+###############################################################
+###############################################################
+##################연관성분석을 위한 전처리#####################
 YMD_pos_done <- pos_done
 YMD_pos_done$date <- strptime(YMD_pos_done$date, format=c("%Y-%m-%d"))
 YMD_pos_done$date <- as.POSIXct(YMD_pos_done$date)
@@ -411,7 +424,8 @@ contents[which(is.na(contents))] <- 0
 head(contents)
 view(wordcount)
 view(unlist_wordcount)
-
+################################################################################
+#######################아직 여기까지밖에 못함##################################
 ################################################################################
 install.packages("arules")
 library(arules)
